@@ -22,7 +22,7 @@ int main()
 					break;
 				case sf::Event::Resized:
 					std::cout << "New window width: "<< evnt.size.width << " New window height: "<< evnt.size.height << std::endl;
-					//printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
+					printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
 					break;
 				}
 
