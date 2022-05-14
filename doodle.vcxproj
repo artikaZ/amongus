@@ -90,17 +90,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Sources/Main.cpp" />
+    <ClCompile Include="Sources\Animation.cpp" />
+    <ClCompile Include="Sources\Collider.cpp" />
+    <ClCompile Include="Sources\Platform.cpp" />
+    <ClCompile Include="Sources\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\background.png" />
-    <Image Include="Resources\doodle1.png" />
-    <Image Include="Resources\doodle2.png" />
-    <Image Include="Resources\platform.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Sources\Animation.h" />
+    <ClInclude Include="Sources\Collider.h" />
+    <ClInclude Include="Sources\Platform.h" />
+    <ClInclude Include="Sources\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

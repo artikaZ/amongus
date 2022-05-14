@@ -1,45 +1,29 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
-//#include "Animation.h"
+#include "Player.h"
+#include "Platform.h"
 
-class Animation
+static const float VIEW_LENGHT = 1200.0f;
+static const float VIEW_HEIGHT = 800.0f;
+
+void ResizeView(const sf::RenderWindow& window, sf::View& view) // keiciant lango dydi, objektas nepraranda proporciju
 {
-public:
-	Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
-	~Animation();
-
-	void Update(int row, float deltaTime);
-
-public:
-	sf::IntRect uvRect;
-
-private:
-	sf::Vector2u imageCount;
-	sf::Vector2u currentImage;
-
-	float totalTime;
-	float switchTime;
-
-};
-
+	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
+	view.setSize(VIEW_LENGHT * aspectRatio, VIEW_HEIGHT);
+}
 
 int main()
 {
 
 	sf::RenderWindow window(sf::VideoMode(1200, 800), "Epic game", sf::Style::Close | sf::Style::Resize);
-	sf::RectangleShape player(sf::Vector2f(200.0f, 240.0f));
-	player.setPosition(206.0f, 206.0f);
+	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(VIEW_LENGHT, VIEW_HEIGHT));
 	sf::Texture playerTexture;
-	playerTexture.loadFromFile("standing1.png");
-	player.setTexture(&playerTexture);
-	
-	Animation animation(&playerTexture, sf::Vector2u(4, 1), 0.3f);
-	
-	/*sf::Vector2u textureSize = playerTexture.getSize();
-	textureSize.x /= 6;
-	textureSize.y /= 6;
+	playerTexture.loadFromFile("standing2.png");
 
-	player.setTextureRect(sf::IntRect(textureSize.x * 0 , textureSize.y * 0  , textureSize.x, textureSize.y));*/
+	Player player(&playerTexture, sf::Vector2u(4, 2), 0.3f, 100.0f);
+
+	Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
+	Platform platform2(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(300.0f, 0.0f));
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -58,13 +42,12 @@ int main()
 				window.close();
 				break;
 			case sf::Event::Resized:
-				//std::cout << "New window width: "<< evnt.size.width << " New window height: "<< evnt.size.height << std::endl;
-				//printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
+				ResizeView(window, view);
 				break;
 			}
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)&&player.getGlobalBounds().left>0)
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)&&player.getGlobalBounds().left>0)
 		{
 			player.move(-0.1f, 0.0f);
 		}
@@ -79,15 +62,23 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
 			player.move(0.0f, 0.1f);
-		}
+		}*/
 
-		animation.Update(0, deltaTime);
-		player.setTextureRect(animation.uvRect);
 
-		window.clear(sf::Color(150,150,150));
-		window.draw(player);
+		player.Update(deltaTime);
+
+		platform1.GetCollider().CheckCollider(player.GetCollider(), 0.0f);
+		platform2.GetCollider().CheckCollider(player.GetCollider(), -1.0f);
+
+		view.setCenter(player.GetPosition()); // kamera sekioja zaideja
+
+		window.clear(sf::Color(100,150,200));
+		window.setView(view);
+		player.Draw(window);
+		platform1.Draw(window);
+		platform2.Draw(window);
 		window.display();
-	}
+	} 
 
 	return 0;
 }
