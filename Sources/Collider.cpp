@@ -39,6 +39,7 @@ bool Collider::CheckCollider(Collider  other, float push)
 				other.Move(intersectX * push, 0.0f);
 			}
 		}
+		
 		else
 		{
 			if (deltaY > 0.0f)

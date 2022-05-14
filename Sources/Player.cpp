@@ -13,7 +13,6 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
 	body.setTexture(texture);
 }
 
-
 Player::~Player()
 {
 }
@@ -26,13 +25,17 @@ void Player::Update(float deltaTime)
 	{
 		movement.x -= speed * deltaTime;
 	}
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
 		movement.x -= speed * deltaTime * 2;
-	}*/
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		movement.x += speed * deltaTime;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	{
+		movement.x += speed * deltaTime * 2;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
