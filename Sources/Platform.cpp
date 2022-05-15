@@ -15,4 +15,5 @@ Platform::~Platform()
 void Platform :: Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+
 }
